@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# export SSL_CERT_FILE="{{pkgPathFor "core/cacerts"}}/ssl/cert.pem"
+
+if [ ! -f {{pkg.svc_var_path}}/init ]; then
+  cat {{pkg.svc_config_path}}/config.rb >> {{pkg.path}}/.chef/config.rb
+fi
+touch {{pkg.svc_var_path}}/init
+
+cd {{pkg.path}}
+exec 2>&1
+exec chef-client -z
